@@ -1,27 +1,41 @@
 pipeline {
-
-  agent any
-
-  stages {
-
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
-    }
-
-    stage('TF Plan') {
-      steps {
-          script {
-          def tfHome = tool name: ‘Terraform’
-          env.PATH = “${tfHome}:${env.PATH}”
-           }
-          sh ‘terraform — version’
-          sh 'terraform init'
-          sh 'terraform plan -out myplan'
-          sh 'terraform apply'
-      }      
-    }
-  } 
-
+ agent any
+ 
+ stages {
+ stage(‘checkout’) {
+ steps {
+ git branch: ‘master’, url: ‘https://github.com/schennu1/ec2launchterrform.git’
+ 
+ }
+ }
+ stage(‘Set Terraform path’) {
+ steps {
+ script {
+ def tfHome = tool name: ‘Terraform’
+ env.PATH = “${tfHome}:${env.PATH}”
+ }
+ sh ‘terraform — version’
+ 
+ 
+ }
+ }
+ 
+ stage(‘Provision infrastructure’) {
+ 
+ steps {
+ dir(‘dev’)
+ {
+ sh ‘terraform init’
+ sh ‘terraform plan -out=plan’
+ // sh ‘terraform destroy -auto-approve’
+ sh ‘terraform apply plan’
+ }
+ 
+ 
+ }
+ }
+ 
+ 
+ 
+ }
 }
