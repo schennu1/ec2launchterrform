@@ -2,16 +2,16 @@
 
 // Build Parameters
 properties([ parameters([
-  string( name: 'AWS_ACCESS_KEY_ID', defaultValue: ''),
-  string( name: 'AWS_SECRET_ACCESS_KEY', defaultValue: '')
+  string( name: 'AKIAJE6MIAR2MOBA2MVA', defaultValue: 'AKIAJE6MIAR2MOBA2MVA'),
+  string( name: 'AWS_SECRET_ACCESS_KEY', defaultValue: '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')
 ]), pipelineTriggers([]) ])
 
 // Environment Variables
-env.AWS_ACCESS_KEY_ID = "AKIAJE6MIAR2MOBA2MVA"
-env.AWS_SECRET_ACCESS_KEY = "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"
+env.AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
+env.AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
 
 node {
-  env.PATH += ":/usr/local/bin/"
+
 
 
   stage ('Checkout') {
