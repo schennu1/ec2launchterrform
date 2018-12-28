@@ -14,19 +14,13 @@ node {
 
 
   env.PATH += ":/usr/local/bin/terraform"
-  sh ‘terraform — version’
-
-  stage('Set Terraform path'){
-   script {
-     def tfHome = tool name: ‘Terraform’
-     env.PATH = “${tfHome}:${env.PATH}”
-         }
-      sh ‘terraform — version’
-
-  }
+  
 
   stage ('Checkout') {
     checkout scm
+    def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+    env.PATH = "${tfHome}:${env.PATH}"
+
   }
   
   stage ('Terraform Init') {
