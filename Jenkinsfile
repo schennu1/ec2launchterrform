@@ -14,16 +14,16 @@ node {
 
 
   env.PATH += ":/usr/local/bin/terraform"
-  
+
   stage ('Checkout') {
     checkout scm
   }
   
   stage ('Terraform Init') {
-    sh 'terraform init'
+    sh 'terraform init -input=false'
   }
   stage ('Terraform Plan') {
-    sh 'terraform plan'
+    sh 'terraform plan -input=false'
   }
 
   // Optional wait for approval
