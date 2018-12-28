@@ -11,16 +11,15 @@ env.AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
 env.AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
 
 node {
-
-
-  env.PATH += ":/usr/local/bin/terraform"
   
+
 
   stage ('Checkout') {
     checkout scm
-    def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
-    env.PATH = "${tfHome}:${env.PATH}"
-
+    PATH = "/usr/local/bin/terraform:$PATH"
+    sh  """
+                    /usr/local/bin/terraform -v
+            """
   }
   
   stage ('Terraform Init') {
