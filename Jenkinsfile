@@ -24,12 +24,12 @@ node {
   
   stage ('Terraform Init') {
     sh  """
-            terraform init -input=false
+            /usr/local/bin/terraform init -input=false
         """
   }
   stage ('Terraform Plan') {
     sh  """
-            terraform plan -input=false
+            /usr/local/bin/terraform plan -input=false
         """ 
    
   }
@@ -37,14 +37,17 @@ node {
   
   stage ('Terraform Apply') {
     sh  """
-            terraform plan -out=tfplan -input=false
+            /usr/local/bin/terraform plan -out=tfplan -input=false
         """ 
   }
 
   stage ('Post Run Tests') {
     echo "Insert your infrastructure test of choice and/or application validation here."
     sleep 2
-    sh 'terraform show'
+     sh  """
+            /usr/local/bin/terraform show
+        """ 
+
   }
 
   }
