@@ -23,17 +23,22 @@ node {
   }
   
   stage ('Terraform Init') {
-    sh 'terraform init -input=false'
+    sh  """
+            terraform init -input=false
+        """
   }
   stage ('Terraform Plan') {
-    sh 'terraform plan -input=false'
+    sh  """
+            terraform plan -input=false
+        """ 
+   
   }
 
-  // Optional wait for approval
-  input 'Deploy stack?'
-
+  
   stage ('Terraform Apply') {
-    sh 'terraform apply'
+    sh  """
+            terraform plan -out=tfplan -input=false
+        """ 
   }
 
   stage ('Post Run Tests') {
