@@ -14,6 +14,16 @@ node {
 
 
   env.PATH += ":/usr/local/bin/terraform"
+  sh ‘terraform — version’
+
+  stage('Set Terraform path'){
+   script {
+     def tfHome = tool name: ‘Terraform’
+     env.PATH = “${tfHome}:${env.PATH}”
+         }
+      sh ‘terraform — version’
+
+  }
 
   stage ('Checkout') {
     checkout scm
