@@ -13,7 +13,8 @@ env.AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
 node {
 
 
-
+  env.PATH += ":/usr/local/bin/terraform"
+  
   stage ('Checkout') {
     checkout scm
   }
